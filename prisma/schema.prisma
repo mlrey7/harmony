@@ -1,0 +1,149 @@
+datasource db {
+    provider  = "postgresql"
+    url       = env("DATABASE_URL")
+    directUrl = env("DIRECT_URL")
+}
+
+model user {
+    id          String   @id @default(cuid())
+    name        String
+    username    String   @unique
+    image       String   @default("")
+    cover_image String   @default("")
+    bio         String   @default("")
+    created_at  DateTime @default(now())
+    updated_at  DateTime @default(now()) @updatedAt
+
+    messages            message[]
+    server_memberships  server_member[]
+    channel_memberships channel_member[]
+    friendships         friendship[]
+    reactions           reaction[]
+    user_status         user_status?
+    user_roles          user_role[]
+}
+
+model user_status {
+    id     String @id @default(cuid())
+    status String
+
+    user_id String @unique
+    user    user   @relation(fields: [user_id], references: [id])
+}
+
+model friendship {
+    requestee_id String
+    requestee    user    @relation(fields: [requestee_id], references: [id])
+    addressee_id String
+    addressee    channel @relation(fields: [addressee_id], references: [id])
+
+    @@id([requestee_id, addressee_id])
+}
+
+model role {
+    id         String   @id @default(cuid())
+    title      String
+    color      String
+    icon       String
+    created_at DateTime @default(now())
+
+    server_id String
+    server    server @relation(fields: [server_id], references: [id])
+
+    role_users user_role[]
+}
+
+model user_role {
+    user_id String
+    user    user   @relation(fields: [user_id], references: [id])
+    role_id String
+    role    role   @relation(fields: [role_id], references: [id])
+
+    @@id([user_id, role_id])
+}
+
+model server {
+    id          String   @id @default(cuid())
+    title       String
+    description String   @default("")
+    image       String   @default("")
+    cover_image String   @default("")
+    created_at  DateTime @default(now())
+
+    channel_groups channel_group[]
+    server_members server_member[]
+    role           role[]
+}
+
+model server_member {
+    user_id   String
+    user      user   @relation(fields: [user_id], references: [id])
+    server_id String
+    server    server @relation(fields: [server_id], references: [id])
+
+    @@id([user_id, server_id])
+}
+
+model channel_group {
+    id         String   @id @default(cuid())
+    title      String
+    created_at DateTime @default(now())
+
+    server_id String
+    server    server @relation(fields: [server_id], references: [id])
+
+    channels channel[]
+}
+
+model channel {
+    id          String   @id @default(cuid())
+    title       String
+    description String   @default("")
+    created_at  DateTime @default(now())
+    updated_at  DateTime @default(now()) @updatedAt
+
+    channel_group_id String
+    channel_group    channel_group    @relation(fields: [channel_group_id], references: [id])
+    channel_members  channel_member[]
+    friendship       friendship[]
+}
+
+model channel_member {
+    user_id String
+    user    user   @relation(fields: [user_id], references: [id])
+
+    channel_id String
+    channel    channel @relation(fields: [channel_id], references: [id])
+
+    @@id([user_id, channel_id])
+}
+
+model message {
+    id            String   @id @default(cuid())
+    text_content  String
+    image_content String[]
+    created_at    DateTime @default(now())
+    updated_at    DateTime @default(now()) @updatedAt
+
+    author_id String
+    author    user   @relation(fields: [author_id], references: [id])
+
+    reply_to_id String
+    reply_to    message   @relation("replies", fields: [reply_to_id], references: [id])
+    replies     message[] @relation("replies")
+
+    reactions reaction[]
+}
+
+model reaction {
+    emote      String
+    created_at DateTime @default(now())
+
+    user_id String
+    user    user   @relation(fields: [user_id], references: [id])
+
+    message_id String
+    message    message @relation(fields: [message_id], references: [id])
+
+    @@id([emote, user_id, message_id])
+}
