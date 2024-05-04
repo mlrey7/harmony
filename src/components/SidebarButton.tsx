@@ -7,15 +7,14 @@ const sidebarButtonVariants = cva(
   {
     variants: {
       variant: {
-        default: "text-gray-300",
+        default: "text-gray-300 hover:bg-primary",
         action: "text-green-500 hover:bg-green-600 hover:text-white",
-        directMessage: "text-gray-300 hover:bg-primary",
       },
     },
     defaultVariants: {
       variant: "default",
     },
-  }
+  },
 );
 
 export interface SidebarButtonProps
@@ -34,12 +33,12 @@ const SidebarButton = React.forwardRef<HTMLButtonElement, SidebarButtonProps>(
         {...props}
       >
         {children}
-        <span className="absolute w-auto py-2 px-3 m-2 min-w-max left-14 rounded-md shadow-md text-white bg-gray-900 text-sm font-semibold transition-all duration-100 scale-0 origin-left group-hover:scale-100">
+        <span className="absolute left-14 m-2 w-auto min-w-max origin-left scale-0 rounded-md bg-gray-900 px-3 py-2 text-sm font-semibold text-white shadow-md transition-all duration-100 group-hover:scale-100">
           {tooltip}
         </span>
       </button>
     );
-  }
+  },
 );
 
 SidebarButton.displayName = "SidebarButton";

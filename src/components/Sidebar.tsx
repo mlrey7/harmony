@@ -6,8 +6,8 @@ import { Separator } from "./ui/separator";
 
 const Sidebar = () => {
   return (
-    <div className="fixed top-0 min-h-screen left-0 flex flex-col bg-gray-900 pt-3 px-3 gap-2">
-      <SidebarButton tooltip="Add a Server" variant={"directMessage"}>
+    <div className="fixed left-0 top-0 flex min-h-screen flex-col gap-2 bg-gray-900 px-3 pt-3">
+      <SidebarButton tooltip="Add a Server">
         <Atom className="h-6 w-6" />
       </SidebarButton>
       <Separator className="w-8 self-center bg-gray-600" />
