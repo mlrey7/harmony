@@ -30,9 +30,13 @@ const SidebarButton = ({
   children,
   variant,
   className,
+  ...props
 }: SidebarButtonProps) => {
   return (
-    <button className={cn(sidebarButtonVariants({ variant, className }))}>
+    <button
+      className={cn(sidebarButtonVariants({ variant, className }))}
+      {...props}
+    >
       {children}
       <span className="absolute w-auto py-2 px-3 m-2 min-w-max left-14 rounded-md shadow-md text-white bg-gray-900 text-sm font-semibold transition-all duration-100 scale-0 origin-left group-hover:scale-100">
         {tooltip}
