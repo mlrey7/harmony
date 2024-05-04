@@ -25,24 +25,23 @@ export interface SidebarButtonProps
   children: React.ReactNode;
 }
 
-const SidebarButton = ({
-  tooltip = "",
-  children,
-  variant,
-  className,
-  ...props
-}: SidebarButtonProps) => {
-  return (
-    <button
-      className={cn(sidebarButtonVariants({ variant, className }))}
-      {...props}
-    >
-      {children}
-      <span className="absolute w-auto py-2 px-3 m-2 min-w-max left-14 rounded-md shadow-md text-white bg-gray-900 text-sm font-semibold transition-all duration-100 scale-0 origin-left group-hover:scale-100">
-        {tooltip}
-      </span>
-    </button>
-  );
-};
+const SidebarButton = React.forwardRef<HTMLButtonElement, SidebarButtonProps>(
+  ({ tooltip = "", children, variant, className, ...props }, ref) => {
+    return (
+      <button
+        className={cn(sidebarButtonVariants({ variant, className }))}
+        ref={ref}
+        {...props}
+      >
+        {children}
+        <span className="absolute w-auto py-2 px-3 m-2 min-w-max left-14 rounded-md shadow-md text-white bg-gray-900 text-sm font-semibold transition-all duration-100 scale-0 origin-left group-hover:scale-100">
+          {tooltip}
+        </span>
+      </button>
+    );
+  }
+);
+
+SidebarButton.displayName = "SidebarButton";
 
 export default SidebarButton;
