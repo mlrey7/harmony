@@ -22,13 +22,20 @@ export interface SidebarButtonProps
     VariantProps<typeof sidebarButtonVariants> {
   tooltip?: string;
   children: React.ReactNode;
+  active?: boolean;
 }
 
 const SidebarButton = React.forwardRef<HTMLButtonElement, SidebarButtonProps>(
-  ({ tooltip = "", children, variant, className, ...props }, ref) => {
+  (
+    { tooltip = "", children, variant, className, active = false, ...props },
+    ref,
+  ) => {
     return (
       <button
-        className={cn(sidebarButtonVariants({ variant, className }))}
+        className={cn([
+          sidebarButtonVariants({ variant, className }),
+          { "before:inset-y-1 before:scale-100": active },
+        ])}
         ref={ref}
         {...props}
       >
