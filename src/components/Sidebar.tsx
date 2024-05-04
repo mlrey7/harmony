@@ -6,7 +6,7 @@ import { Separator } from "./ui/separator";
 
 const Sidebar = () => {
   return (
-    <div className="fixed left-0 top-0 flex min-h-screen flex-col gap-2 bg-gray-900 px-3 pt-3">
+    <nav className="fixed left-0 top-0 flex min-h-screen flex-col gap-2 bg-gray-900 px-3 pt-3">
       <SidebarButton tooltip="Add a Server">
         <Atom className="h-6 w-6" />
       </SidebarButton>
@@ -18,7 +18,7 @@ const Sidebar = () => {
       <SidebarButton tooltip="Explore Discoverable Servers" variant={"action"}>
         <Compass className="h-6 w-6" />
       </SidebarButton>
-    </div>
+    </nav>
   );
 };
 

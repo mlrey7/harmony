@@ -3,7 +3,7 @@ import { VariantProps, cva } from "class-variance-authority";
 import React from "react";
 
 const sidebarButtonVariants = cva(
-  "relative flex justify-center items-center rounded-3xl hover:rounded-2xl transition-all bg-gray-800 h-12 w-12 cursor-pointer duration-150 ease-linear group",
+  "relative flex justify-center items-center rounded-3xl hover:rounded-2xl transition-all bg-gray-800 h-12 w-12 cursor-pointer duration-150 ease-linear group before:absolute before:inset-y-3.5 before:-left-4 before:w-2 before:scale-0 before:rounded before:bg-gray-300 before:transition-all before:duration-150 before:ease-in-out before:hover:scale-100",
   {
     variants: {
       variant: {
