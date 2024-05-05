@@ -3,15 +3,23 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
-import { ChevronDown, LogOut, Pencil } from "lucide-react";
+import {
+  ChevronDown,
+  Headphones,
+  LogOut,
+  MicOff,
+  Pencil,
+  Settings,
+} from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { Button } from "./ui/button";
 
 const ServerNav = () => {
   return (
-    <div className="bg-background2 flex min-h-screen w-60 flex-col">
+    <div className="bg-background2 fixed top-0 flex min-h-screen w-60 flex-col">
       <DropdownMenu>
         <DropdownMenuTrigger
           asChild
@@ -38,6 +46,28 @@ const ServerNav = () => {
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
+      <div className="flex-1"></div>
+      <div className="bg-background3 flex h-14 items-center px-2">
+        <Avatar>
+          <AvatarImage src="" alt="avatar" />
+          <AvatarFallback>AC</AvatarFallback>
+        </Avatar>
+        <div className="ml-2 flex flex-col justify-center">
+          <h2 className="text-sm">Accelthreat</h2>
+          <h3 className="text-xs text-gray-400">Online</h3>
+        </div>
+        <div className="ml-3 flex">
+          <Button size={"compactIcon"} variant={"ghost"}>
+            <MicOff className="h-5 w-5 text-red-500" />
+          </Button>
+          <Button size={"compactIcon"} variant={"ghost"}>
+            <Headphones className="h-5 w-5" />
+          </Button>
+          <Button size={"compactIcon"} variant={"ghost"}>
+            <Settings className="h-5 w-5" />
+          </Button>
+        </div>
+      </div>
     </div>
   );
 };
