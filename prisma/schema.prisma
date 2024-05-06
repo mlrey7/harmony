@@ -4,6 +4,10 @@ datasource db {
     directUrl = env("DIRECT_URL")
 }
 
+generator client {
+    provider = "prisma-client-js"
+}
+
 model user {
     id          String   @id @default(cuid())
     name        String
@@ -17,10 +21,12 @@ model user {
     messages            message[]
     server_memberships  server_member[]
     channel_memberships channel_member[]
-    friendships         friendship[]
+    addressee_friends   friendship[]     @relation("requestee_friendship")
+    requestee_friends   friendship[]     @relation("addressee_friendship")
     reactions           reaction[]
     user_status         user_status?
     user_roles          user_role[]
+    friendship          friendship[]
 }
 
 model user_status {
@@ -33,9 +39,13 @@ model user_status {
 
 model friendship {
     requestee_id String
-    requestee    user    @relation(fields: [requestee_id], references: [id])
+    requestee    user   @relation("requestee_friendship", fields: [requestee_id], references: [id])
+
     addressee_id String
-    addressee    channel @relation(fields: [addressee_id], references: [id])
+    addressee    user   @relation("addressee_friendship", fields: [addressee_id], references: [id])
+
+    user   user?   @relation(fields: [userId], references: [id])
+    userId String?
 
     @@id([requestee_id, addressee_id])
 }
@@ -102,10 +112,11 @@ model channel {
     created_at  DateTime @default(now())
     updated_at  DateTime @default(now()) @updatedAt
 
-    channel_group_id String
-    channel_group    channel_group    @relation(fields: [channel_group_id], references: [id])
-    channel_members  channel_member[]
-    friendship       friendship[]
+    channel_group_id    String
+    channel_group       channel_group    @relation(fields: [channel_group_id], references: [id])
+    channel_members     channel_member[]
+    message             message[]
+    pinned_messages_ids String[]
 }
 
 model channel_member {
@@ -128,11 +139,14 @@ model message {
     author_id String
     author    user   @relation(fields: [author_id], references: [id])
 
-    reply_to_id String
-    reply_to    message   @relation("replies", fields: [reply_to_id], references: [id])
+    reply_to_id String?
+    reply_to    message?  @relation("replies", fields: [reply_to_id], references: [id])
     replies     message[] @relation("replies")
 
     reactions reaction[]
+
+    channel_id String
+    channel    channel @relation(fields: [channel_id], references: [id])
 }
 
 model reaction {
