@@ -40,7 +40,13 @@
     --background-1: 225, 6%, 13%;
     --background-2: 220, 7%, 18%;
     --background-3: 228 7 15%;
+
     --foreground: 210 40% 98%;
+    --foreground-1: 218 8% 61%;
+    --foreground-2: 214 8% 61%;
+    --foreground-3: 215 9% 73%;
+    --foreground-4: 210 9% 87%;
+    --foreground-5: 220 13% 95%;
 
     --card: 223, 7%, 21%;
     --card-foreground: 210 40% 98%;
@@ -60,7 +66,7 @@
     --accent: 217.2 32.6% 17.5%;
     --accent-foreground: 210 40% 98%;
 
-    --destructive: 0 62.8% 30.6%;
+    --destructive: 359 87% 60%;
     --destructive-foreground: 210 40% 98%;
 
     --border: 217.2 32.6% 17.5%;

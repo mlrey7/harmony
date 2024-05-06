@@ -42,13 +42,13 @@ const ChannelGroup = ({ serverId }: { serverId: string }) => {
           setCollapsed((prev) => !prev);
         }}
       >
-        <ChevronDown className="mr-1 h-3 w-3 text-gray-500 transition-transform group-hover/header:text-gray-300 group-[.collapsed]:-rotate-90" />
-        <p className="text-xs font-semibold uppercase text-gray-500 group-hover/header:text-gray-300">
+        <ChevronDown className="text-foreground1 mr-1 h-3 w-3 transition-transform group-hover/header:text-gray-300 group-[.collapsed]:-rotate-90" />
+        <p className="text-foreground1 text-xs font-semibold uppercase group-hover/header:text-gray-300">
           text channels
         </p>
         <div className="flex-1" />
         <button
-          className="text-gray-500 hover:text-gray-300"
+          className="text-foreground1 hover:text-gray-300"
           onClick={(e: React.MouseEvent) => {
             e.stopPropagation();
           }}
@@ -63,17 +63,17 @@ const ChannelGroup = ({ serverId }: { serverId: string }) => {
               buttonVariants({
                 variant: "ghost",
                 className:
-                  "h-min w-full px-3 py-1.5 text-gray-500 hover:text-gray-300 group-[.collapsed]:hidden",
+                  "text-foreground1 h-min w-full px-3 py-1.5 hover:text-gray-300 group-[.collapsed]:hidden",
               }),
               ,
               {
-                "bg-gray-700 text-gray-300 group-[.collapsed]:flex":
+                "bg-gray-700 text-white group-[.collapsed]:flex":
                   channel.id === currentChannelId,
               },
             ])}
             href={`/channels/${serverId}/${channel.id}`}
           >
-            <Hash className="mr-1 h-5 w-5 text-gray-500" />
+            <Hash className="text-foreground1 mr-1 h-5 w-5" />
             {channel.title}
             <div className="flex-1" />
           </Link>

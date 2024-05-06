@@ -32,13 +32,13 @@ const ServerNav = ({ serverId }: { serverId: string }) => {
           asChild
           className="group cursor-pointer transition-all hover:bg-background data-[state=open]:bg-background"
         >
-          <div className="flex items-center justify-between px-4 py-3 font-semibold shadow">
+          <div className="text-foreground5 flex items-center justify-between px-4 py-3 font-semibold shadow">
             Own Server
             <ChevronDown className="h-5 w-5 transition-all ease-in-out group-data-[state=open]:rotate-180" />
           </div>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="DropdownMenuContent mt-1">
-          <DropdownMenuItem className="text-sm text-gray-400">
+          <DropdownMenuItem className="text-foreground3 text-sm">
             <div className="flex w-full items-center justify-between">
               Edit Server Profile
               <Pencil className="h-4 w-4" />
@@ -48,7 +48,7 @@ const ServerNav = ({ serverId }: { serverId: string }) => {
           <DropdownMenuItem className="text-sm text-red-500">
             <div className="flex w-full items-center justify-between">
               Leave Server
-              <LogOut className="h-4 w-4" />
+              <LogOut className="h-4 w-4 text-destructive" />
             </div>
           </DropdownMenuItem>
         </DropdownMenuContent>
@@ -56,7 +56,7 @@ const ServerNav = ({ serverId }: { serverId: string }) => {
       <div className="flex-1 px-2 py-2">
         <Button
           variant={"ghost"}
-          className="w-full px-2 text-gray-500 hover:text-gray-300"
+          className="text-foreground1 w-full px-2 hover:text-gray-300"
         >
           <TextSearch className="mr-2 h-6 w-6" />
           <p className="text-base">Browse Channels</p>
@@ -71,18 +71,18 @@ const ServerNav = ({ serverId }: { serverId: string }) => {
           <AvatarFallback>AC</AvatarFallback>
         </Avatar>
         <div className="ml-2 flex flex-col justify-center">
-          <h2 className="text-sm">Accelthreat</h2>
-          <h3 className="text-xs text-gray-400">Online</h3>
+          <h2 className="text-foreground5 text-sm">Accelthreat</h2>
+          <h3 className="text-foreground3 text-xs">Online</h3>
         </div>
         <div className="ml-3 flex">
           <Button size={"compactIcon"} variant={"ghost"}>
-            <MicOff className="h-5 w-5 text-red-500" />
+            <MicOff className="h-5 w-5 text-destructive" />
           </Button>
           <Button size={"compactIcon"} variant={"ghost"}>
-            <Headphones className="h-5 w-5" />
+            <Headphones className="text-foreground3 h-5 w-5" />
           </Button>
           <Button size={"compactIcon"} variant={"ghost"}>
-            <Settings className="h-5 w-5" />
+            <Settings className="text-foreground3 h-5 w-5" />
           </Button>
         </div>
       </div>
