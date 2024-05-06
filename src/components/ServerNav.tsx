@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,13 +14,18 @@ import {
   MicOff,
   Pencil,
   Settings,
+  TextSearch,
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Button } from "./ui/button";
+import { useSelectedLayoutSegment } from "next/navigation";
+import { Separator } from "./ui/separator";
 
 const ServerNav = () => {
+  const channelId = useSelectedLayoutSegment();
+
   return (
-    <div className="bg-background2 fixed top-0 flex min-h-screen w-60 flex-col">
+    <div className="fixed top-0 flex min-h-screen w-60 flex-col bg-background2">
       <DropdownMenu>
         <DropdownMenuTrigger
           asChild
@@ -46,8 +52,18 @@ const ServerNav = () => {
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-      <div className="flex-1"></div>
-      <div className="bg-background3 flex h-14 items-center px-2">
+      <div className="flex-1 px-2 py-2">
+        <Button
+          variant={"ghost"}
+          className="w-full px-2 text-gray-500 hover:text-gray-300"
+        >
+          <TextSearch className="mr-2 h-6 w-6" />
+          <p className="text-base">Browse Channels</p>
+          <div className="flex-1" />
+        </Button>
+        <Separator className="mt-2 w-full self-center bg-gray-700" />
+      </div>
+      <div className="flex h-14 items-center bg-background3 px-2">
         <Avatar>
           <AvatarImage src="" alt="avatar" />
           <AvatarFallback>AC</AvatarFallback>
