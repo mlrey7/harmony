@@ -6,27 +6,15 @@ import { useState } from "react";
 import { buttonVariants } from "../ui/button";
 import Link from "next/link";
 import { useSelectedLayoutSegment } from "next/navigation";
+import { ExtendedChannelGroup } from "@/types/db";
 
-const sampleChannels = [
-  {
-    id: "12312312",
-    title: "general",
-  },
-  {
-    id: "13432",
-    title: "welcome",
-  },
-  {
-    id: "1325672",
-    title: "rules",
-  },
-  {
-    id: "18977",
-    title: "announcements",
-  },
-];
-
-const ServerNavChannelGroup = ({ serverId }: { serverId: string }) => {
+const ServerNavChannelGroup = ({
+  serverId,
+  channelGroup,
+}: {
+  serverId: string;
+  channelGroup: ExtendedChannelGroup;
+}) => {
   const [collapsed, setCollapsed] = useState(false);
   const currentChannelId = useSelectedLayoutSegment();
 
@@ -42,9 +30,9 @@ const ServerNavChannelGroup = ({ serverId }: { serverId: string }) => {
           setCollapsed((prev) => !prev);
         }}
       >
-        <ChevronDown className="text-foreground1 mr-1 h-3 w-3 transition-transform group-hover/header:text-gray-300 group-[.collapsed]:-rotate-90" />
-        <p className="text-foreground1 text-xs font-semibold uppercase group-hover/header:text-gray-300">
-          text channels
+        <ChevronDown className="mr-1 h-3 w-3 text-foreground1 transition-transform group-hover/header:text-gray-300 group-[.collapsed]:-rotate-90" />
+        <p className="text-xs font-semibold uppercase text-foreground1 group-hover/header:text-gray-300">
+          {channelGroup.title}
         </p>
         <div className="flex-1" />
         <button
@@ -56,14 +44,14 @@ const ServerNavChannelGroup = ({ serverId }: { serverId: string }) => {
           <Plus className="h-4 w-4" />
         </button>
       </li>
-      {...sampleChannels.map((channel) => (
+      {...channelGroup.channels.map((channel) => (
         <li key={channel.id}>
           <Link
             className={cn([
               buttonVariants({
                 variant: "ghost",
                 className:
-                  "text-foreground1 h-min w-full px-3 py-1.5 hover:text-gray-300 group-[.collapsed]:hidden",
+                  "h-min w-full px-3 py-1.5 text-foreground1 hover:text-gray-300 group-[.collapsed]:hidden",
               }),
               ,
               {
@@ -73,7 +61,7 @@ const ServerNavChannelGroup = ({ serverId }: { serverId: string }) => {
             ])}
             href={`/channels/${serverId}/${channel.id}`}
           >
-            <Hash className="text-foreground1 mr-1.5 h-5 w-5" />
+            <Hash className="mr-1.5 h-5 w-5 text-foreground1" />
             {channel.title}
             <div className="flex-1" />
           </Link>

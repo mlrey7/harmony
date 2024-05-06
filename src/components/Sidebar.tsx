@@ -4,8 +4,22 @@ import { Atom, Compass, Plus } from "lucide-react";
 import SidebarButton from "./SidebarButton";
 import { Separator } from "./ui/separator";
 import { useRouter, useSelectedLayoutSegment } from "next/navigation";
+import { ExtendedServer } from "@/types/db";
 
-const Sidebar = () => {
+const titleToInitials = (title: string) => {
+  return title
+    .split(" ")
+    .map((word) => word.substring(0, 1))
+    .slice(0, 2)
+    .join("");
+};
+
+const Sidebar = ({
+  servers,
+}: {
+  userId: string;
+  servers: Array<ExtendedServer>;
+}) => {
   const segment = useSelectedLayoutSegment();
   const router = useRouter();
 
@@ -21,15 +35,20 @@ const Sidebar = () => {
         <Atom className="h-6 w-6" />
       </SidebarButton>
       <Separator className="w-8 self-center bg-gray-600" />
-      <SidebarButton
-        tooltip="Own Server"
-        active={segment === "1"}
-        onClick={() => {
-          router.push("/channels/1/1");
-        }}
-      >
-        OS
-      </SidebarButton>
+      {...servers.map((server) => (
+        <SidebarButton
+          tooltip={server.title}
+          active={segment === server.id}
+          onClick={() => {
+            router.push(
+              `/channels/${server.id}/${server.channel_groups.at(0)?.channels.at(0)?.id}`,
+            );
+          }}
+          key={server.id}
+        >
+          {titleToInitials(server.title)}
+        </SidebarButton>
+      ))}
       <SidebarButton tooltip="Add a Server" variant={"action"}>
         <Plus className="h-6 w-6" />
       </SidebarButton>
