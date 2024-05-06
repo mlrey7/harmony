@@ -2,10 +2,16 @@ import MemberList from "@/components/MemberList";
 import ServerNav from "@/components/ServerNav";
 import React from "react";
 
-const Layout = async ({ children }: { children: React.ReactNode }) => {
+const Layout = async ({
+  children,
+  params: { server_id },
+}: {
+  children: React.ReactNode;
+  params: { server_id: string };
+}) => {
   return (
     <div className="flex">
-      <ServerNav />
+      <ServerNav serverId={server_id} />
       {children}
       <MemberList />
     </div>

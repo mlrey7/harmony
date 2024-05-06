@@ -20,8 +20,9 @@ import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Button } from "./ui/button";
 import { useSelectedLayoutSegment } from "next/navigation";
 import { Separator } from "./ui/separator";
+import ChannelGroup from "./ChannelGroup";
 
-const ServerNav = () => {
+const ServerNav = ({ serverId }: { serverId: string }) => {
   const channelId = useSelectedLayoutSegment();
 
   return (
@@ -62,6 +63,7 @@ const ServerNav = () => {
           <div className="flex-1" />
         </Button>
         <Separator className="mt-2 w-full self-center bg-gray-700" />
+        <ChannelGroup serverId={serverId} />
       </div>
       <div className="flex h-14 items-center bg-background3 px-2">
         <Avatar>
