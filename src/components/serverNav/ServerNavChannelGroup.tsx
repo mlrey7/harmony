@@ -73,7 +73,7 @@ const ServerNavChannelGroup = ({ serverId }: { serverId: string }) => {
             ])}
             href={`/channels/${serverId}/${channel.id}`}
           >
-            <Hash className="text-foreground1 mr-1 h-5 w-5" />
+            <Hash className="text-foreground1 mr-1.5 h-5 w-5" />
             {channel.title}
             <div className="flex-1" />
           </Link>

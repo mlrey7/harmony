@@ -22,17 +22,17 @@ const ServerNavHeader = () => {
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="DropdownMenuContent mt-1">
-        <DropdownMenuItem className="text-foreground3 text-sm">
+        <DropdownMenuItem className="text-foreground3 text-sm hover:text-white">
           <div className="flex w-full items-center justify-between">
             Edit Server Profile
             <Pencil className="h-4 w-4" />
           </div>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem className="text-sm text-red-500">
+        <DropdownMenuItem className="group text-sm text-red-500 hover:text-white focus:bg-destructive">
           <div className="flex w-full items-center justify-between">
             Leave Server
-            <LogOut className="h-4 w-4 text-destructive" />
+            <LogOut className="h-4 w-4 text-destructive group-hover:text-white" />
           </div>
         </DropdownMenuItem>
       </DropdownMenuContent>
