@@ -1,5 +1,5 @@
 import MemberList from "@/components/MemberList";
-import ServerNav from "@/components/ServerNav";
+import ServerNav from "@/components/serverNav/ServerNav";
 import React from "react";
 
 const Layout = async ({

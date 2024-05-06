@@ -3,7 +3,7 @@
 import { cn } from "@/lib/utils";
 import { ChevronDown, Hash, Plus } from "lucide-react";
 import { useState } from "react";
-import { buttonVariants } from "./ui/button";
+import { buttonVariants } from "../ui/button";
 import Link from "next/link";
 import { useSelectedLayoutSegment } from "next/navigation";
 
@@ -26,7 +26,7 @@ const sampleChannels = [
   },
 ];
 
-const ChannelGroup = ({ serverId }: { serverId: string }) => {
+const ServerNavChannelGroup = ({ serverId }: { serverId: string }) => {
   const [collapsed, setCollapsed] = useState(false);
   const currentChannelId = useSelectedLayoutSegment();
 
@@ -67,7 +67,7 @@ const ChannelGroup = ({ serverId }: { serverId: string }) => {
               }),
               ,
               {
-                "bg-gray-700 text-white group-[.collapsed]:flex":
+                "bg-gray-700 text-white hover:bg-gray-700 hover:text-white group-[.collapsed]:flex":
                   channel.id === currentChannelId,
               },
             ])}
@@ -83,4 +83,4 @@ const ChannelGroup = ({ serverId }: { serverId: string }) => {
   );
 };
 
-export default ChannelGroup;
+export default ServerNavChannelGroup;
