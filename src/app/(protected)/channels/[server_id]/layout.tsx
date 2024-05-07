@@ -36,7 +36,7 @@ const Layout = async ({
     <div className="flex">
       <ServerNav serverId={server_id} server={server} />
       {children}
-      <MemberList />
+      {/* <MemberList /> */}
     </div>
   );
 };

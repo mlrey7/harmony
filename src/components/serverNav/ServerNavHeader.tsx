@@ -21,7 +21,7 @@ const ServerNavHeader = ({
         asChild
         className="group cursor-pointer transition-all hover:bg-background data-[state=open]:bg-background"
       >
-        <div className="flex items-center justify-between px-4 py-3 font-semibold text-foreground5 shadow">
+        <div className="flex items-center justify-between px-4 py-3 font-semibold text-foreground5 shadow-lg">
           {server.title}
           <ChevronDown className="h-5 w-5 transition-all ease-in-out group-data-[state=open]:rotate-180" />
         </div>
