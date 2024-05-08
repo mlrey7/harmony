@@ -26,6 +26,7 @@ const config = {
         background1: "hsl(var(--background-1))",
         background2: "hsl(var(--background-2))",
         background3: "hsl(var(--background-3))",
+        background4: "hsl(var(--background-4))",
         foreground: "hsl(var(--foreground))",
         foreground1: "hsl(var(--foreground-1))",
         foreground2: "hsl(var(--foreground-2))",
