@@ -5,14 +5,7 @@ import SidebarButton from "./SidebarButton";
 import { Separator } from "./ui/separator";
 import { useRouter, useSelectedLayoutSegment } from "next/navigation";
 import { ExtendedServer } from "@/types/db";
-
-const titleToInitials = (title: string) => {
-  return title
-    .split(" ")
-    .map((word) => word.substring(0, 1))
-    .slice(0, 2)
-    .join("");
-};
+import { stringToInitials } from "@/lib/utils";
 
 const Sidebar = ({
   servers,
@@ -46,7 +39,7 @@ const Sidebar = ({
           }}
           key={server.id}
         >
-          {titleToInitials(server.title)}
+          {stringToInitials(server.title)}
         </SidebarButton>
       ))}
       <SidebarButton tooltip="Add a Server" variant={"action"}>

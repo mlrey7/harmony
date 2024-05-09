@@ -1,5 +1,6 @@
 import MemberList from "@/components/MemberList";
 import ServerNav from "@/components/serverNav/ServerNav";
+import { getServer } from "@/controllers/serverController";
 import { db } from "@/lib/db";
 import { getAuthUser } from "@/utils/auth";
 import { redirect } from "next/navigation";
@@ -16,19 +17,7 @@ const Layout = async ({
 
   if (!authUser) return redirect("/");
 
-  const server = await db.server.findUnique({
-    where: {
-      id: server_id,
-    },
-    include: {
-      channel_groups: {
-        include: {
-          channels: true,
-        },
-      },
-      server_members: true,
-    },
-  });
+  const server = await getServer({ server_id });
 
   if (!server) return redirect("/");
 

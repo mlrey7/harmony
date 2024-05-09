@@ -3,7 +3,7 @@ import { z } from "zod";
 export const PrismaMessageValidator = z.object({
   id: z.string(),
   text_content: z.string(),
-  image_content: z.string(),
+  image_content: z.array(z.string()),
   created_at: z.coerce.date(),
   updated_at: z.coerce.date(),
   author: z.object({

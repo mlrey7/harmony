@@ -1,13 +1,17 @@
 import React from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { PrismaMessageType } from "@/lib/validators/message";
+import { stringToInitials } from "@/lib/utils";
 
 const ChannelMessage = ({ message }: { message: PrismaMessageType }) => {
   return (
     <div className="flex pb-5 pl-4 pr-8">
       <Avatar className="mr-4">
-        <AvatarImage src="" alt="avatar" />
-        <AvatarFallback>AC</AvatarFallback>
+        <AvatarImage
+          src={message.author.image}
+          alt={`${message.author.name} avatar`}
+        />
+        <AvatarFallback>{stringToInitials(message.author.name)}</AvatarFallback>
       </Avatar>
       <div className="-mt-0.5 flex flex-col">
         <div className="flex items-baseline gap-2">

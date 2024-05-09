@@ -28,7 +28,6 @@ const Channel = ({ channel_id }: { channel_id: string }) => {
     queryFn: async ({ pageParam }) => {
       const query = `/api/channel/${channel_id}/messages?limit=5&page=${pageParam}`;
       const data = await fetch(query);
-      // console.log(await data.json());
       return (await data.json()) as Array<PrismaMessageType>;
       // return z.array(PrismaMessageValidator).parse(await data.json());
     },
@@ -42,7 +41,7 @@ const Channel = ({ channel_id }: { channel_id: string }) => {
   });
 
   const messages = data?.pages.flat() ?? [];
-  console.log(messages);
+
   useEffect(() => {
     if (entry?.isIntersecting && hasNextPage && !isFetching) {
       fetchNextPage();
