@@ -2,8 +2,18 @@ import React from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { PrismaMessageType } from "@/lib/validators/message";
 import { stringToInitials } from "@/lib/utils";
+import { format, isToday, isYesterday } from "date-fns";
 
 const ChannelMessage = ({ message }: { message: PrismaMessageType }) => {
+  const formatMessageDate = (date: Date) => {
+    let day = "";
+    if (isToday(date)) day = "Today at";
+    else if (isYesterday(date)) day = "Yesterday at";
+    else day = `${format(date, "MM/dd/yyyy")}`;
+
+    return `${day} ${format(date, "hh:mm a")}`;
+  };
+
   return (
     <div className="flex pb-5 pl-4 pr-8">
       <Avatar className="mr-4">
@@ -19,7 +29,7 @@ const ChannelMessage = ({ message }: { message: PrismaMessageType }) => {
             {message.author.name}
           </h2>
           <p className="text-xs font-medium text-foreground3">
-            Today at 9:51 AM
+            {formatMessageDate(message.created_at)}
           </p>
         </div>
         <div className="flex flex-col gap-1 text-sm font-normal text-foreground4">
