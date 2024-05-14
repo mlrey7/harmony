@@ -7,6 +7,7 @@ import { PrismaMessageValidator } from "@/lib/validators/message";
 import { useIntersection } from "@mantine/hooks";
 import { useEffect } from "react";
 import { createClient } from "@/utils/supabase/client";
+import { apiClient } from "@/lib/apiClient";
 
 const Channel = ({ channel_id }: { channel_id: string }) => {
   const queryClient = useQueryClient();
@@ -48,8 +49,8 @@ const Channel = ({ channel_id }: { channel_id: string }) => {
   } = useInfiniteQuery({
     queryKey: ["infinite", "channel", channel_id],
     queryFn: async ({ pageParam }) => {
-      const query = `/api/channel/${channel_id}/messages?limit=5&page=${pageParam}`;
-      const data = await fetch(query);
+      const query = `/channel/${channel_id}/messages?limit=5&page=${pageParam}`;
+      const data = await apiClient.get(query);
       return z.array(PrismaMessageValidator).parse(await data.json());
     },
     initialPageParam: 1,

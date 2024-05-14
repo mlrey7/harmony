@@ -6,6 +6,7 @@ import React, { useState } from "react";
 import TextareaAutosize from "react-textarea-autosize";
 import { createClient } from "@/utils/supabase/client";
 import { CreateMessagePayloadType } from "@/lib/validators/message";
+import { apiClient } from "@/lib/apiClient";
 
 const ChannelInput = ({
   channelTitle,
@@ -24,13 +25,7 @@ const ChannelInput = ({
         channel_id: channelId,
       };
 
-      const data = await fetch("/api/message/create", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      });
+      const data = await apiClient.post("/message/create", payload);
 
       return data;
     },
