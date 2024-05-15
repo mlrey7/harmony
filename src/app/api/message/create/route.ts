@@ -13,11 +13,12 @@ export async function POST(req: NextRequest) {
 
   try {
     const body = await req.json();
-    const { channel_id, text_content } =
+    const { channel_id, text_content, id } =
       CreateMessagePayloadValidator.parse(body);
 
     await db.message.create({
       data: {
+        id,
         text_content,
         channel_id,
         author_id: user.id,

@@ -24,6 +24,7 @@ export const PrismaMessageValidator = z.object({
 export type PrismaMessageType = z.infer<typeof PrismaMessageValidator>;
 
 export const CreateMessagePayloadValidator = z.object({
+  id: z.string(),
   text_content: z.string(),
   channel_id: z.string(),
 });

@@ -1,27 +1,55 @@
 /* eslint-disable jsx-a11y/alt-text */
 "use client";
-import { useMutation } from "@tanstack/react-query";
+import {
+  InfiniteData,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import { CirclePlus, Gift, SmilePlus, Sticker, Image } from "lucide-react";
 import React, { useState } from "react";
 import TextareaAutosize from "react-textarea-autosize";
 import { createClient } from "@/utils/supabase/client";
-import { CreateMessagePayloadType } from "@/lib/validators/message";
+import {
+  CreateMessagePayloadType,
+  PrismaMessageType,
+} from "@/lib/validators/message";
 import { apiClient } from "@/lib/apiClient";
+import { v4 as uuidv4 } from "uuid";
+import { user } from "@prisma/client";
 
 const ChannelInput = ({
   channelTitle,
   channelId,
+  authUserId,
 }: {
   channelTitle: string;
   channelId: string;
+  authUserId: string;
 }) => {
   const client = createClient();
   const [textInput, setTextInput] = useState("");
+  const queryClient = useQueryClient();
+
+  const { data: user } = useQuery({
+    queryKey: ["user", authUserId],
+    queryFn: async () => {
+      const data = await apiClient.get(`/user/${authUserId}`);
+      return (await data.json()) as user;
+    },
+  });
 
   const { mutate: sendMessage } = useMutation({
-    mutationFn: async () => {
+    mutationFn: async ({
+      text_content,
+      id,
+    }: {
+      text_content: string;
+      id: string;
+    }) => {
       const payload: CreateMessagePayloadType = {
-        text_content: textInput,
+        id,
+        text_content,
         channel_id: channelId,
       };
 
@@ -29,9 +57,69 @@ const ChannelInput = ({
 
       return data;
     },
-    onSuccess: () => {
+    onMutate: async ({
+      text_content,
+      id,
+    }: {
+      text_content: string;
+      id: string;
+    }) => {
       setTextInput("");
 
+      await queryClient.cancelQueries({
+        queryKey: ["infinite", "channel", channelId],
+      });
+      const previousPostMetrics = queryClient.getQueryData([
+        "infinite",
+        "channel",
+        channelId,
+      ]);
+
+      if (user) {
+        queryClient.setQueryData(
+          ["infinite", "channel", channelId],
+          (oldMessages: InfiniteData<Array<PrismaMessageType>>) => {
+            const optimisticMessage: PrismaMessageType = {
+              id,
+              text_content,
+              created_at: new Date(),
+              updated_at: new Date(),
+              image_content: [],
+              reactions: [],
+              author: {
+                id: user.id,
+                image: user.image,
+                name: user.name,
+                username: user.username,
+              },
+              reply_to_id: null,
+            };
+
+            const firstPage = [optimisticMessage, ...oldMessages.pages[0]];
+
+            return {
+              pages: oldMessages.pages.map((page, index) =>
+                index === 0 ? firstPage : page,
+              ),
+              pageParams: oldMessages.pageParams,
+            };
+          },
+        );
+      }
+
+      return { previousPostMetrics };
+    },
+    onError: (err, _, context) => {
+      queryClient.setQueryData(
+        ["infinite", "channel", channelId],
+        context?.previousPostMetrics,
+      );
+
+      console.error(err);
+
+      return err;
+    },
+    onSettled: () => {
       client
         .channel(channelId, {
           config: {
@@ -47,7 +135,7 @@ const ChannelInput = ({
   });
 
   const onSendMessage = () => {
-    sendMessage();
+    sendMessage({ text_content: textInput, id: uuidv4() });
   };
 
   return (
