@@ -29,11 +29,9 @@ const Page = async ({
   }
 
   return (
-    <div className="ml-60 flex h-screen w-full flex-col">
+    <div className="ml-60 flex h-screen w-full flex-col overflow-y-hidden">
       <ChannelHeader channelTitle={channel.title} />
-      <div className="mt-12 h-full">
-        <Channel channel_id={channel_id} />
-      </div>
+      <Channel channel_id={channel_id} />
       <ChannelInput
         channelTitle={channel.title}
         channelId={channel_id}

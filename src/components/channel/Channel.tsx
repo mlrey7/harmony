@@ -71,7 +71,7 @@ const Channel = ({ channel_id }: { channel_id: string }) => {
   }, [entry, fetchNextPage, hasNextPage, isFetching]);
 
   return (
-    <ul className="flex h-full flex-col-reverse overflow-y-auto">
+    <ul className="mt-12 flex h-full flex-col-reverse overflow-y-auto">
       {...messages.map((message, index) => {
         return (
           <li key={message.id} ref={index === messages.length - 1 ? ref : null}>

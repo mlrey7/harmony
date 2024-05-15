@@ -139,7 +139,7 @@ const ChannelInput = ({
   };
 
   return (
-    <div className="left-[312px] z-50 bg-background px-4 pb-5">
+    <div className="left-[312px] z-50  bg-background px-4 pb-5">
       <div className="mr-4 flex w-full gap-4 rounded-lg bg-background4 py-1 pr-4 has-[:focus-visible]:ring-4 has-[:focus-visible]:ring-blue-500">
         <button className="ml-4 h-6 w-6 py-1.5 text-foreground3 hover:text-gray-300">
           <CirclePlus />
