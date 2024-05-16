@@ -1,5 +1,5 @@
 import { db } from "@/lib/db";
-import { createClient } from "@/utils/supabase/server";
+import { getAuthUser } from "@/utils/auth";
 import {
   HydrationBoundary,
   QueryClient,
@@ -8,17 +8,17 @@ import {
 import { redirect } from "next/navigation";
 
 const Layout = async ({ children }: { children: React.ReactNode }) => {
-  const supabase = createClient();
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        staleTime: 1000 * 60 * 60,
+      },
+    },
+  });
 
-  const queryClient = new QueryClient();
+  const authUser = await getAuthUser();
 
-  const {
-    data: { user: authUser },
-  } = await supabase.auth.getUser();
-
-  if (!authUser) {
-    return redirect("/");
-  }
+  if (!authUser) return redirect("/");
 
   await queryClient.prefetchQuery({
     queryKey: ["user", "current"],
