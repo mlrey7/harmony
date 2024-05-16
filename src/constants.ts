@@ -1,0 +1,3 @@
+export const REALTIME_EVENTS = {
+  NEW_MESSAGE: "NEW_MESSAGE",
+};

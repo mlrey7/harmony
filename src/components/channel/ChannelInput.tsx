@@ -17,6 +17,7 @@ import { apiClient } from "@/lib/apiClient";
 import { v4 as uuidv4 } from "uuid";
 import useCurrentUser from "@/hooks/useCurrentUser";
 import { queryKeys } from "@/lib/queryKeys";
+import { REALTIME_EVENTS } from "@/constants";
 
 const ChannelInput = ({
   channelTitle,
@@ -117,7 +118,7 @@ const ChannelInput = ({
         })
         .send({
           type: "broadcast",
-          event: "new_message",
+          event: REALTIME_EVENTS.NEW_MESSAGE,
           payload: { message: "invalidate queries" },
         });
     },

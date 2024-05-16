@@ -1,3 +1,4 @@
+import { REALTIME_EVENTS } from "@/constants";
 import { queryKeys } from "@/lib/queryKeys";
 import { createClient } from "@/utils/supabase/client";
 import { useQueryClient } from "@tanstack/react-query";
@@ -11,7 +12,7 @@ const useSubscribeToRealtimeMessages = (channel_id: string) => {
     const realtimeChannel = client.channel(channel_id);
 
     realtimeChannel
-      .on("broadcast", { event: "new_message" }, (payload) => {
+      .on("broadcast", { event: REALTIME_EVENTS.NEW_MESSAGE }, (payload) => {
         console.log("Receive new message event", payload);
 
         queryClient.invalidateQueries({
