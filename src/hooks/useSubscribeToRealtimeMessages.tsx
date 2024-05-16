@@ -1,3 +1,4 @@
+import { queryKeys } from "@/lib/queryKeys";
 import { createClient } from "@/utils/supabase/client";
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
@@ -14,7 +15,7 @@ const useSubscribeToRealtimeMessages = (channel_id: string) => {
         console.log("Receive new message event", payload);
 
         queryClient.invalidateQueries({
-          queryKey: ["infinite", "channel", channel_id],
+          queryKey: queryKeys.channelInfiniteMessages(channel_id),
         });
       })
       .subscribe((status) => {

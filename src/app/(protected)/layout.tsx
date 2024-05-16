@@ -1,4 +1,5 @@
 import { db } from "@/lib/db";
+import { queryKeys } from "@/lib/queryKeys";
 import { getAuthUser } from "@/utils/auth";
 import {
   HydrationBoundary,
@@ -21,7 +22,7 @@ const Layout = async ({ children }: { children: React.ReactNode }) => {
   if (!authUser) return redirect("/");
 
   await queryClient.prefetchQuery({
-    queryKey: ["user", "current"],
+    queryKey: queryKeys.currentUser(),
     queryFn: async () => {
       const user = await db.user.findUnique({
         where: {

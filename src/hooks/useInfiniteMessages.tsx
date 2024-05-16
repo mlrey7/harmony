@@ -1,4 +1,5 @@
 import { apiClient } from "@/lib/apiClient";
+import { queryKeys } from "@/lib/queryKeys";
 import { PrismaMessageValidator } from "@/lib/validators/message";
 import { useIntersection } from "@mantine/hooks";
 import { useInfiniteQuery } from "@tanstack/react-query";
@@ -19,7 +20,7 @@ const useInfiniteMessages = (channel_id: string) => {
     isFetching,
     fetchNextPage,
   } = useInfiniteQuery({
-    queryKey: ["infinite", "channel", channel_id],
+    queryKey: queryKeys.channelInfiniteMessages(channel_id),
     queryFn: async ({ pageParam }) => {
       const query = `/channel/${channel_id}/messages?limit=5&page=${pageParam}`;
       const data = await apiClient.get(query);

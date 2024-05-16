@@ -16,6 +16,7 @@ import {
 import { apiClient } from "@/lib/apiClient";
 import { v4 as uuidv4 } from "uuid";
 import useCurrentUser from "@/hooks/useCurrentUser";
+import { queryKeys } from "@/lib/queryKeys";
 
 const ChannelInput = ({
   channelTitle,
@@ -57,17 +58,15 @@ const ChannelInput = ({
       setTextInput("");
 
       await queryClient.cancelQueries({
-        queryKey: ["infinite", "channel", channelId],
+        queryKey: queryKeys.channelInfiniteMessages(channelId),
       });
-      const previousPostMetrics = queryClient.getQueryData([
-        "infinite",
-        "channel",
-        channelId,
-      ]);
+      const previousPostMetrics = queryClient.getQueryData(
+        queryKeys.channelInfiniteMessages(channelId),
+      );
 
       if (user) {
         queryClient.setQueryData(
-          ["infinite", "channel", channelId],
+          queryKeys.channelInfiniteMessages(channelId),
           (oldMessages: InfiniteData<Array<PrismaMessageType>>) => {
             const optimisticMessage: PrismaMessageType = {
               id,
@@ -101,7 +100,7 @@ const ChannelInput = ({
     },
     onError: (err, _, context) => {
       queryClient.setQueryData(
-        ["infinite", "channel", channelId],
+        queryKeys.channelInfiniteMessages(channelId),
         context?.previousPostMetrics,
       );
 
