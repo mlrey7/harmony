@@ -3,7 +3,6 @@
 import {
   InfiniteData,
   useMutation,
-  useQuery,
   useQueryClient,
 } from "@tanstack/react-query";
 import { CirclePlus, Gift, SmilePlus, Sticker, Image } from "lucide-react";
@@ -16,28 +15,19 @@ import {
 } from "@/lib/validators/message";
 import { apiClient } from "@/lib/apiClient";
 import { v4 as uuidv4 } from "uuid";
-import { user } from "@prisma/client";
+import useCurrentUser from "@/hooks/useCurrentUser";
 
 const ChannelInput = ({
   channelTitle,
   channelId,
-  authUserId,
 }: {
   channelTitle: string;
   channelId: string;
-  authUserId: string;
 }) => {
   const client = createClient();
   const [textInput, setTextInput] = useState("");
   const queryClient = useQueryClient();
-
-  const { data: user } = useQuery({
-    queryKey: ["user", authUserId],
-    queryFn: async () => {
-      const data = await apiClient.get(`/user/${authUserId}`);
-      return (await data.json()) as user;
-    },
-  });
+  const user = useCurrentUser();
 
   const { mutate: sendMessage } = useMutation({
     mutationFn: async ({

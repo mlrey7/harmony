@@ -21,7 +21,7 @@ const Layout = async ({ children }: { children: React.ReactNode }) => {
   }
 
   await queryClient.prefetchQuery({
-    queryKey: ["user", authUser.id],
+    queryKey: ["user", "current"],
     queryFn: async () => {
       const user = await db.user.findUnique({
         where: {

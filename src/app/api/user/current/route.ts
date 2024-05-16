@@ -1,14 +1,17 @@
 import { db } from "@/lib/db";
-import { NextRequest } from "next/server";
+import { getAuthUser } from "@/utils/auth";
 
-export async function GET(
-  _: NextRequest,
-  { params: { id } }: { params: { id: string } },
-) {
+export async function GET() {
+  const authUser = await getAuthUser();
+
+  if (!authUser) {
+    return new Response("Unauthorized", { status: 401 });
+  }
+
   try {
     const user = await db.user.findUnique({
       where: {
-        id,
+        id: authUser.id,
       },
     });
 
