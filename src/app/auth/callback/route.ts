@@ -26,8 +26,12 @@ export async function GET(request: Request) {
       },
     );
     const { error } = await supabase.auth.exchangeCodeForSession(code);
+
     if (!error) {
+      console.log("redirect after auth to", `${origin}/channels/me`);
       return NextResponse.redirect(`${origin}/channels/me`);
+    } else {
+      console.error("auth error", error);
     }
   }
 

@@ -2,10 +2,8 @@
 
 import ChannelMessage from "./ChannelMessage";
 import useInfiniteMessages from "@/hooks/useInfiniteMessages";
-import useSubscribeToRealtimeMessages from "@/hooks/useSubscribeToRealtimeMessages";
 
 const Channel = ({ channel_id }: { channel_id: string }) => {
-  useSubscribeToRealtimeMessages(channel_id);
   const { lastElementRef, messages } = useInfiniteMessages(channel_id);
 
   return (
