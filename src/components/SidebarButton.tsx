@@ -34,7 +34,7 @@ const SidebarButton = React.forwardRef<HTMLButtonElement, SidebarButtonProps>(
       <button
         className={cn([
           sidebarButtonVariants({ variant, className }),
-          { "before:inset-y-1 before:scale-100": active },
+          { "rounded-2xl before:inset-y-1 before:scale-100": active },
         ])}
         ref={ref}
         {...props}

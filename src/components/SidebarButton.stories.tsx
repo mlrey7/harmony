@@ -8,7 +8,7 @@ const meta: Meta<typeof SidebarButton> = {
   component: SidebarButton,
   decorators: [
     (Story) => (
-      <nav className="fixed left-0 top-0 flex min-h-screen flex-col gap-2 bg-gray-900 px-3 pt-3">
+      <nav className="fixed left-0 top-0 flex  flex-col gap-2 bg-gray-900 px-3 py-3">
         <Story />
       </nav>
     ),
