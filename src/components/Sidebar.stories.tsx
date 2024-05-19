@@ -65,6 +65,7 @@ const meta: Meta<typeof Sidebar> = {
   parameters: {
     nextjs: {
       navigation: {
+        pathName: "channels",
         segments: ["1", "1"],
       },
     },
@@ -79,5 +80,20 @@ export const Default: Story = {
   args: {
     servers: servers,
     userId: "",
+  },
+};
+
+export const OtherServer: Story = {
+  args: {
+    servers: servers,
+    userId: "",
+  },
+  parameters: {
+    nextjs: {
+      navigation: {
+        pathName: "channels",
+        segments: ["2", "2"],
+      },
+    },
   },
 };
